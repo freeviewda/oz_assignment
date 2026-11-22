@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokki Nyangi - Resume</title>
+
+    <!-- External CSS 방식 -->
+    <link rel="stylesheet" href="./resume_style.css">
+
+    <!-- FontAwesome 아이콘 링크 (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <!-- 전체 반응형 레이아웃 래퍼 -->
+    <div class="resume-wrapper">
+
+        <!-- 좌측 다크 사이드바 (Semantic 태그: aside, nav) -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active"><a href="#introduce">이력서</a></li>
+                    <li class="nav-item"><a href="#experience">포트폴리오</a></li>
+                    <li class="nav-item"><a href="#" onclick="window.print(); return false;">PDF 내려받기</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- 우측 메인 이력서 영역 (Semantic 태그: main) -->
+        <main class="main-content">
+
+            <!-- 헤더: 이름, 연락처 정보 및 원형 프로필 이미지 (Semantic 태그: header) -->
+            <header class="profile-header">
+                <div class="profile-meta">
+                    <h1 class="eng-name">Tokki Nyangi <span class="sub-name">(토끼냥이)</span></h1>
+                    <div class="contact-links">
+                        <span class="contact-item">
+                            <i class="fa-solid fa-mobile-screen-button"></i> 010-2023-1120
+                        </span>
+                        <a href="mailto:tokki@rabbit.dev" class="contact-item">
+                            <i class="fa-regular fa-envelope"></i> tokki@rabbit.dev
+                        </a>
+                        <a href="https://github.com/freeviewda/oz_assignment" target="_blank" class="contact-item github-link">
+                            <i class="fa-brands fa-github"></i> 토끼냥이's Github
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 원형 프로필 이미지 (Box Model: border-radius, border, box-shadow) -->
+                <div class="profile-avatar">
+                    <img src="rabbit.png" alt="천재 개발자 토끼냥이 프로필 사진">
+                </div>
+            </header>
+
+            <hr class="section-divider">
+
+            <!-- 1. Introduce 섹션 (Semantic 태그: section) -->
+            <section class="resume-section" id="introduce">
+                <h2 class="section-heading">Introduce</h2>
+                <p class="intro-description">
+                    데이터의 가치를 창출하고 효율적인 시스템을 설계하는 것을 즐기는 3년 차 Python 기반 풀스택 엔지니어 토끼냥이입니다.
+                    당근 수확 예측 머신러닝 모델부터 실시간 웹 서비스까지, 복잡한 비즈니스 로직을 심플하고 확장성 높은 코드로 풀어내는 것을 좋아합니다.
+                    단순한 기능 구현을 넘어 브라우저 렌더링 성능 최적화와 클라우드 인프라 자동화에 깊은 관심을 가지고 있습니다.
+                    사용자 경험과 시스템 안정성 사이의 완벽한 균형을 맞추며 팀원들과 함께 지식을 나누고 성장하는 환경을 지향합니다.
+                </p>
+            </section>
+
+            <!-- 2. Skills 섹션 -->
+            <section class="resume-section" id="skills">
+                <h2 class="section-heading">Skills</h2>
+
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3 class="category-title">LANGUAGE</h3>
+                        <div class="badge-group">
+                            <span class="badge">Python</span>
+                            <span class="badge">TypeScript</span>
+                            <span class="badge">JavaScript</span>
+                            <span class="badge">SQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">FRAMEWORK</h3>
+                        <div class="badge-group">
+                            <span class="badge">Django</span>
+                            <span class="badge">FastAPI</span>
+                            <span class="badge">React</span>
+                            <span class="badge">Next.js</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">DATABASE</h3>
+                        <div class="badge-group">
+                            <span class="badge">PostgreSQL</span>
+                            <span class="badge">Redis</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3 class="category-title">INFRA</h3>
+                        <div class="badge-group">
+                            <span class="badge">AWS</span>
+                            <span class="badge">Docker</span>
+                            <span class="badge">Terraform</span>
+                            <span class="badge">GitHub Actions</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Experience 섹션 (Semantic 태그: article) -->
+            <section class="resume-section" id="experience">
+                <h2 class="section-heading">Experience</h2>
+
+                <article class="timeline-entry">
+                    <div class="entry-header">
+                        <div class="company-info">
+                            <h3 class="company-name">카카오당근</h3>
+                            <span class="role-desc">Full-Stack Developer <span class="rank">| 대리</span></span>
+                        </div>
+                        <span class="period">2024.05 ~ 2026.03</span>
+                    </div>
+
+                    <div class="project-block">
+                        <div class="project-header">
+                            <h4 class="project-title">신규 모바일 게임 및 퀘스트 통합 관리 시스템 구축</h4>
+                            <span class="project-date">2024.10 ~ 2026.03</span>
+                        </div>
+                        <ul class="task-bullets">
+                            <li>Django 및 FastAPI 기반의 고성능 마이크로서비스 설계 및 RESTful API 개발</li>
+                            <li>React와 TypeScript를 활용한 실시간 대용량 트래픽 모니터링 대시보드 구현</li>
+                            <li>PostgreSQL 인덱싱 최적화 및 AWS 클라우드 인프라 자동화 (Terraform)</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-block">
+                        <div class="project-header">
+                            <h4 class="project-title">사내 대용량 데이터 분석 및 로그 시각화 툴 개발</h4>
+                            <span class="project-date">2024.05 ~ 2024.09</span>
+                        </div>
+                        <ul class="task-bullets">
+                            <li>Pandas 및 NumPy를 활용한 일 1억 건 대용량 당근 로그 데이터 파이프라인 구축</li>
+                            <li>사용자 맞춤형 차트 및 실시간 인터랙티브 시각화 컴포넌트 개발</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="timeline-entry">
+                    <div class="entry-header">
+                        <div class="company-info">
+                            <h3 class="company-name">네이버토끼랩스</h3>
+                            <span class="role-desc">Frontend Developer <span class="rank">| 인턴</span></span>
+                        </div>
+                        <span class="period">2023.06 ~ 2023.12</span>
+                    </div>
+
+                    <div class="project-block">
+                        <div class="project-header">
+                            <h4 class="project-title">공통 UI 디자인 시스템 컴포넌트 라이브러리 개발</h4>
+                            <span class="project-date">2023.06 ~ 2023.12</span>
+                        </div>
+                        <ul class="task-bullets">
+                            <li>React 기반의 사내 공통 웹 컴포넌트 모듈 개발 및 크로스 브라우징 최적화 지원</li>
+                            <li>Storybook을 활용한 컴포넌트 시각화 문서화 및 Jest 단위 테스트 코드 작성</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <!-- 4. Education 섹션 -->
+            <section class="resume-section" id="education">
+                <h2 class="section-heading">Education</h2>
+                <div class="list-item-row">
+                    <span class="item-date">2021 ~ 2023</span>
+                    <span class="item-text"><strong>한국당근대학교</strong> (컴퓨터공학 전공, 수석 졸업)</span>
+                </div>
+            </section>
+
+            <!-- 5. Awards 섹션 -->
+            <section class="resume-section" id="awards">
+                <h2 class="section-heading">Awards</h2>
+                <div class="list-item-row">
+                    <span class="item-date">2025.12</span>
+                    <span class="item-text"><strong>올해의 우수개발자상</strong> (카카오당근)</span>
+                </div>
+                <div class="list-item-row">
+                    <span class="item-date">2023.05</span>
+                    <span class="item-text"><strong>교내 프로그래밍 알고리즘 경진대회 대상</strong> (한국당근대학교)</span>
+                </div>
+            </section>
+
+            <!-- 6. Certifications 섹션 -->
+            <section class="resume-section" id="certifications">
+                <h2 class="section-heading">Certifications</h2>
+                <div class="list-item-row">
+                    <span class="item-date">2024.11</span>
+                    <span class="item-text"><strong>정보처리기사</strong> (한국산업인력공단)</span>
+                </div>
+                <div class="list-item-row">
+                    <span class="item-date">2024.02</span>
+                    <span class="item-text"><strong>AWS Certified Solutions Architect - Associate</strong> (AWS)</span>
+                </div>
+                <div class="list-item-row">
+                    <span class="item-date">2023.08</span>
+                    <span class="item-text"><strong>SQL 개발자 (SQLD)</strong> (한국데이터산업진흥원)</span>
+                </div>
+            </section>
+
+            <!-- 7. Send Cover Letter 섹션 (Day 1 폼과의 연계 & 세련된 CSS 적용) -->
+            <section class="resume-section" id="contact">
+                <h2 class="section-heading">Send Cover Letter</h2>
+                <form class="cover-letter-form" action="#" method="post">
+                    <div class="form-field">
+                        <label for="contact-email">담당자 이메일:</label>
+                        <input type="email" id="contact-email" name="email" placeholder="hr@carrot.com" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="company-name">회사명:</label>
+                        <input type="text" id="company-name" name="company" placeholder="(주)Rabbit Tech" required>
+                    </div>
+                    <button type="submit" class="submit-button">
+                        <i class="fa-regular fa-paper-plane"></i> 이력서 전송하기
+                    </button>
+                </form>
+            </section>
+
+            <!-- Footer 영역 (Semantic 태그: footer) -->
+            <footer class="resume-footer">
+                <p>Copyright &#169; 2026 Tokki Nyangi. All rights reserved.</p>
+            </footer>
+
+        </main>
+    </div>
+</body>
+
+</html>
