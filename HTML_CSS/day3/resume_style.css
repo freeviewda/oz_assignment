@@ -1,0 +1,547 @@
+/* =========================================================
+   Tokki Nyangi (토끼냥이) Resume Style Sheet (Day 3)
+   Navbar, Flexbox, Position, Box Model, Responsive Media Query
+   ========================================================= */
+
+/* 1. Box Model 초기화 & 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Box Model 속성: padding과 border가 width/height에 포함 */
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* 고정 네비게이션 바로 인해 섹션 제목이 가려지는 현상 방지 */
+    font-size: 16px;
+}
+
+body {
+    background-color: #f3f4f6;
+    color: #1f2937;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+/* =========================================================
+   2. 상단 네비게이션 바 (Navbar, position: sticky & Flexbox)
+   ========================================================= */
+#navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+
+    /* Flexbox 정렬: 양 끝 정렬 및 수직 중앙 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    height: 64px;
+}
+
+/* 로고 영역 */
+#navbar__logo a {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#navbar__logo i {
+    color: #ea580c; /* 당근 오렌지 색상 */
+    font-size: 1.3rem;
+}
+
+#navbar__logo span {
+    color: #2563eb;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* 네비게이션 메뉴 리스트 */
+#navbar__menu {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+#navbar__menu li a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #4b5563;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+#navbar__menu li a:hover {
+    color: #2563eb;
+    background-color: #eff6ff;
+}
+
+/* 우측 액션 버튼 (언어 전환 링크) */
+#navbar__actions .btn-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b5563;
+    padding: 6px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 20px;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+#navbar__actions .btn-lang:hover {
+    color: #2563eb;
+    border-color: #2563eb;
+    background-color: #f8faff;
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   3. 메인 이력서 카드 레이아웃
+   ========================================================= */
+.resume-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.resume-card {
+    background-color: #ffffff;
+    max-width: 880px;
+    width: 100%;
+    padding: 56px 64px;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================================================
+   4. 프로필 헤더 (Header, Flexbox & Avatar)
+   ========================================================= */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.profile-text .name {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+.profile-text .ko-name {
+    font-size: 1.15rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.profile-text .headline {
+    font-size: 0.95rem;
+    color: #4b5563;
+    margin-bottom: 12px;
+}
+
+#contacts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.88rem;
+    color: #4b5563;
+}
+
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.contact-item i {
+    color: #6b7280;
+}
+
+#github {
+    color: #2563eb;
+}
+
+#github:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
+}
+
+/* 원형 아바타 (Box Model & border-radius) */
+.profile-avatar {
+    flex-shrink: 0;
+}
+
+.profile-avatar img {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f3f4f6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
+/* 구분선 */
+.divider {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 32px 0;
+}
+
+/* =========================================================
+   5. 섹션 공통 스타일
+   ========================================================= */
+.section {
+    margin-bottom: 36px;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    padding-left: 12px;
+    border-left: 4px solid #111827;
+    line-height: 1.2;
+}
+
+.description {
+    color: #374151;
+    font-size: 0.95rem;
+    line-height: 1.75;
+    word-break: keep-all;
+}
+
+/* =========================================================
+   6. Skills 섹션 (뱃지 및 그리드/Flexbox)
+   ========================================================= */
+.skills-box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skill-category {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    letter-spacing: 0.6px;
+    margin-bottom: 6px;
+}
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge {
+    background-color: #f1f3f9;
+    color: #4b6bfb;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.badge:hover {
+    background-color: #e0e7ff;
+    color: #2b4cd8;
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   7. Experience 타임라인
+   ========================================================= */
+.timeline-card {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.timeline-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.company {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    display: inline-block;
+}
+
+.role {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-left: 6px;
+}
+
+.rank {
+    color: #9ca3af;
+    font-weight: normal;
+}
+
+.period {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.project-item {
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+.project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.project-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.project-period {
+    font-size: 0.82rem;
+    color: #9ca3af;
+}
+
+.task-list {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: #4b5563;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+/* =========================================================
+   8. Education, Awards, Certifications 공통 행
+   ========================================================= */
+.info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+.info-date {
+    min-width: 85px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.info-desc {
+    color: #374151;
+}
+
+/* =========================================================
+   9. Send Cover Letter 폼 (Flexbox & Box Model)
+   ========================================================= */
+.contact-guide {
+    font-size: 0.88rem;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.contact-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    background-color: #fafafa;
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 220px;
+}
+
+.input-group label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-submit {
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.btn-submit:hover {
+    background-color: #2563eb;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+/* =========================================================
+   10. Footer 영역
+   ========================================================= */
+.resume-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid #f3f4f6;
+}
+
+/* =========================================================
+   11. 반응형 디자인 (Responsive Media Query)
+   768px 이하 (태블릿 및 모바일) & 480px 이하 (작은 모바일)
+   ========================================================= */
+@media (max-width: 768px) {
+    #navbar {
+        padding: 12px 16px;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    #navbar__menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-top: 1px solid #f3f4f6;
+        padding-top: 8px;
+    }
+
+    #navbar__menu li a {
+        font-size: 0.85rem;
+        padding: 4px 8px;
+    }
+
+    .resume-card {
+        padding: 36px 24px;
+    }
+
+    .profile-header {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    #contacts {
+        justify-content: center;
+    }
+
+    .card-head,
+    .project-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    #navbar__logo a {
+        font-size: 1.1rem;
+    }
+
+    .contact-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .input-group input {
+        width: 100%;
+    }
+
+    .btn-submit {
+        justify-content: center;
+        width: 100%;
+    }
+}

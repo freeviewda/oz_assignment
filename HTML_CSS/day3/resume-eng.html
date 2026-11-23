@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokki Nyangi - Full-Stack Engineer Resume</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="./resume_style.css">
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <!-- Top Responsive Navbar -->
+    <nav id="navbar">
+        <div id="navbar__logo">
+            <a href="#">
+                <i class="fa-solid fa-carrot"></i> Tokki Nyangi <span>Dev</span>
+            </a>
+        </div>
+
+        <ul id="navbar__menu">
+            <li><a href="#introduce">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div id="navbar__actions">
+            <a href="./resume.html" id="english" class="btn-lang">
+                <i class="fa-solid fa-globe"></i> 한국어
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="resume-container">
+        <main class="resume-card" id="contents">
+
+            <!-- Profile Header -->
+            <header class="profile-header">
+                <div class="profile-text">
+                    <h1 class="name">Tokki Nyangi</h1>
+                    <p class="headline">Full-Stack Software Engineer with 3 Years of Experience in Python & Modern Web</p>
+                    
+                    <div id="contacts">
+                        <span class="contact-item">
+                            <i class="fa-solid fa-mobile-screen"></i> +82 10-2023-1120
+                        </span>
+                        <a href="mailto:tokki@rabbit.dev" class="contact-item">
+                            <i class="fa-regular fa-envelope"></i> tokki@rabbit.dev
+                        </a>
+                        <a href="https://github.com/freeviewda/oz_assignment" target="_blank" id="github" class="contact-item">
+                            <i class="fa-brands fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="profile-avatar">
+                    <img src="rabbit.png" alt="Tokki Nyangi Profile Picture">
+                </div>
+            </header>
+
+            <hr class="divider">
+
+            <!-- 1. Introduce -->
+            <section class="section" id="introduce">
+                <h2 class="section-title">About Me</h2>
+                <p class="description">
+                    Passionate 3rd-year full-stack engineer specialized in high-performance Python backends and modern frontend frameworks.
+                    Experienced in architecting microservices, optimizing large-scale data pipelines handling 100M+ log records daily,
+                    and automating cloud infrastructure with Terraform and Docker. Dedicated to writing clean, maintainable code and fostering collaborative engineering cultures.
+                </p>
+            </section>
+
+            <!-- 2. Skills -->
+            <section class="section" id="skills">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-box">
+                    <div class="skill-group">
+                        <h3 class="skill-category">LANGUAGES</h3>
+                        <div class="badge-list">
+                            <span class="badge">Python</span>
+                            <span class="badge">TypeScript</span>
+                            <span class="badge">JavaScript</span>
+                            <span class="badge">SQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-category">FRAMEWORKS & LIBRARIES</h3>
+                        <div class="badge-list">
+                            <span class="badge">Django</span>
+                            <span class="badge">FastAPI</span>
+                            <span class="badge">React</span>
+                            <span class="badge">Next.js</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-category">DATABASES</h3>
+                        <div class="badge-list">
+                            <span class="badge">PostgreSQL</span>
+                            <span class="badge">Redis</span>
+                            <span class="badge">MySQL</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-group">
+                        <h3 class="skill-category">INFRASTRUCTURE & DEVOPS</h3>
+                        <div class="badge-list">
+                            <span class="badge">AWS</span>
+                            <span class="badge">Docker</span>
+                            <span class="badge">Terraform</span>
+                            <span class="badge">GitHub Actions</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Experience -->
+            <section class="section" id="experience">
+                <h2 class="section-title">Work Experience</h2>
+
+                <article class="timeline-card">
+                    <div class="card-head">
+                        <div class="company-wrap">
+                            <h3 class="company">Kakao Carrot</h3>
+                            <span class="role">Full-Stack Developer <span class="rank">| Associate</span></span>
+                        </div>
+                        <span class="period">2024.05 ~ 2026.03</span>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-head">
+                            <h4 class="project-name">Integrated Mobile Game & Quest Management System</h4>
+                            <span class="project-period">2024.10 ~ 2026.03</span>
+                        </div>
+                        <ul class="task-list">
+                            <li>Designed and developed high-throughput microservices using Django and FastAPI.</li>
+                            <li>Implemented real-time traffic monitoring dashboard with React, TypeScript, and WebSockets.</li>
+                            <li>Optimized PostgreSQL queries, cutting API latency by 42%, and automated CI/CD via AWS & Terraform.</li>
+                        </ul>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-head">
+                            <h4 class="project-name">Internal Big Data Analytics & Visualization Tool</h4>
+                            <span class="project-period">2024.05 ~ 2024.09</span>
+                        </div>
+                        <ul class="task-list">
+                            <li>Built an ETL pipeline using Pandas & NumPy processing 100M+ log records per day.</li>
+                            <li>Created custom charting components for instant real-time operational insights.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="timeline-card">
+                    <div class="card-head">
+                        <div class="company-wrap">
+                            <h3 class="company">Naver Rabbit Labs</h3>
+                            <span class="role">Frontend Developer <span class="rank">| Intern</span></span>
+                        </div>
+                        <span class="period">2023.06 ~ 2023.12</span>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-head">
+                            <h4 class="project-name">Shared UI Component Design System Library</h4>
+                            <span class="project-period">2023.06 ~ 2023.12</span>
+                        </div>
+                        <ul class="task-list">
+                            <li>Developed reusable web components using React with full cross-browser compatibility.</li>
+                            <li>Authored Storybook visual documentation and wrote unit tests using Jest.</li>
+                        </ul>
+                    </div>
+                </article>
+            </section>
+
+            <!-- 4. Education -->
+            <section class="section" id="education">
+                <h2 class="section-title">Education</h2>
+                <div class="info-row">
+                    <span class="info-date">2021 ~ 2023</span>
+                    <span class="info-desc"><strong>Korea Carrot University</strong> (B.S. in Computer Science, Valedictorian)</span>
+                </div>
+            </section>
+
+            <!-- 5. Awards -->
+            <section class="section" id="awards">
+                <h2 class="section-title">Honors & Awards</h2>
+                <div class="info-row">
+                    <span class="info-date">2025.12</span>
+                    <span class="info-desc"><strong>Engineer of the Year Award</strong> (Kakao Carrot)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-date">2023.05</span>
+                    <span class="info-desc"><strong>Grand Prize in University Programming Contest</strong> (Korea Carrot University)</span>
+                </div>
+            </section>
+
+            <!-- 6. Certifications -->
+            <section class="section" id="certifications">
+                <h2 class="section-title">Certifications</h2>
+                <div class="info-row">
+                    <span class="info-date">2024.11</span>
+                    <span class="info-desc"><strong>Engineer Information Processing</strong> (HRD Korea)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-date">2024.02</span>
+                    <span class="info-desc"><strong>AWS Certified Solutions Architect - Associate</strong> (AWS)</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-date">2023.08</span>
+                    <span class="info-desc"><strong>SQL Developer (SQLD)</strong> (K-Data)</span>
+                </div>
+            </section>
+
+            <!-- 7. Send Cover Letter -->
+            <section class="section" id="contact">
+                <h2 class="section-title">Send Inquiry</h2>
+                <p class="contact-guide">Feel free to reach out for interview invitations or collaboration opportunities.</p>
+                <form class="contact-form" action="#" method="post">
+                    <div class="input-group">
+                        <label for="email">Contact Email:</label>
+                        <input type="email" id="email" name="email" placeholder="hr@carrot.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="company">Company:</label>
+                        <input type="text" id="company" name="company" placeholder="Rabbit Corp" required>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fa-regular fa-paper-plane"></i> Send Inquiry
+                    </button>
+                </form>
+            </section>
+
+            <!-- Footer -->
+            <footer class="resume-footer">
+                <p>Copyright &#169; 2026 Tokki Nyangi. All rights reserved.</p>
+            </footer>
+
+        </main>
+    </div>
+</body>
+
+</html>
