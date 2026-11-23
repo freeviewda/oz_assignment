@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🤖 JS Robot Visualizer 사용 가이드</title>
+  <style>
+    :root {
+      --bg: #111318;
+      --bg-elev: #191c24;
+      --bg-card: #1f232e;
+      --bg-soft: #262b38;
+      --border: #313749;
+      --text: #eef1f7;
+      --text-muted: #9aa4bc;
+      --cyan: #00e5ff;
+      --teal: #4ec9b0;
+      --green: #39ff14;
+      --yellow: #ffeb3b;
+      --orange: #ffa500;
+      --purple: #c586c0;
+      --blue: #3b82f6;
+      --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      --radius: 14px;
+      --mono: "Consolas", "D2Coding", "Courier New", monospace;
+      --sans: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+    }
+
+    body.light {
+      --bg: #f4f6fb;
+      --bg-elev: #ffffff;
+      --bg-card: #ffffff;
+      --bg-soft: #eef2fa;
+      --border: #d8e0ef;
+      --text: #1b2232;
+      --text-muted: #58657e;
+      --cyan: #0088a8;
+      --teal: #0f8a75;
+      --green: #14803c;
+      --yellow: #b47800;
+      --orange: #c96a00;
+      --purple: #843fa1;
+      --blue: #2563eb;
+      --shadow: 0 8px 24px rgba(24, 39, 75, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    /* Sticky Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg-elev) 88%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--cyan) 16%, transparent);
+      color: var(--cyan);
+      border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+      font-family: var(--mono);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-links a:hover {
+      background: var(--bg-soft);
+      color: var(--text);
+    }
+    .theme-btn {
+      background: var(--bg-soft);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 11px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+    .theme-btn:hover { border-color: var(--cyan); }
+
+    /* Container */
+    .container {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 28px 20px 72px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--cyan) 16%, transparent), transparent 45%),
+        radial-gradient(circle at 12% 85%, color-mix(in srgb, var(--purple) 14%, transparent), transparent 45%),
+        var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 34px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan);
+      background: color-mix(in srgb, var(--cyan) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--cyan) 35%, transparent);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.25;
+      letter-spacing: -0.6px;
+    }
+    .hero p {
+      margin: 0 0 24px;
+      color: var(--text-muted);
+      font-size: 15.5px;
+      max-width: 720px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0ea5e9, #00bcd4);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14.5px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 188, 212, 0.32);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(0, 188, 212, 0.42);
+    }
+    .url-chip {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 10px;
+      user-select: all;
+    }
+
+    /* Section Headings */
+    section {
+      margin-bottom: 38px;
+      scroll-margin-top: 76px;
+    }
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .sec-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 14px;
+      background: color-mix(in srgb, var(--cyan) 16%, transparent);
+      color: var(--cyan);
+      border: 1px solid color-mix(in srgb, var(--cyan) 40%, transparent);
+      flex-shrink: 0;
+    }
+    .sec-head h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -0.3px;
+    }
+
+    /* Visual 3-Pane Mockup */
+    .mockup-shell {
+      background: #14161c;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      color: #e8ecf5;
+    }
+    .mockup-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 14px;
+      background: #1e212b;
+      border-bottom: 1px solid #2e3342;
+      font-size: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mockup-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot.r { background: #ff5f56; }
+    .dot.y { background: #ffbd2e; }
+    .dot.g { background: #27c93f; }
+    .mockup-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .mpill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 5px;
+      background: #2b3040;
+      border: 1px solid #3c4358;
+      color: #cfd6e6;
+    }
+    .mpill.cyan { background: #143c48; border-color: #00bcd4; color: #7ceeff; }
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr 1fr;
+      min-height: 220px;
+    }
+    .mpane {
+      padding: 14px;
+      border-right: 1px solid #2a2f3d;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mpane:last-child { border-right: none; }
+    .mpane-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #9cdcfe;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mcode {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      background: #0f1116;
+      border: 1px solid #262b38;
+      border-radius: 8px;
+      padding: 10px;
+      line-height: 1.65;
+      color: #d4d4d4;
+    }
+    .mcode .hl {
+      background: rgba(0, 229, 255, 0.16);
+      border-left: 3px solid #00e5ff;
+      margin: 0 -10px;
+      padding: 0 7px;
+      display: block;
+    }
+    .mcanvas {
+      flex: 1;
+      background: radial-gradient(circle at top left, #1c222a, #121419);
+      border: 1px solid #262b38;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mdom {
+      flex: 1;
+      background: #ffffff;
+      color: #1f2430;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mdom-btn {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    /* Cards Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card p, .card li {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0;
+    }
+    .card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Steps Timeline */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+    }
+    .step-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--teal);
+      background: color-mix(in srgb, var(--teal) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent);
+      padding: 2px 9px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .step-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    .step-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 13.8px;
+    }
+
+    /* Callout */
+    .callout {
+      margin-top: 14px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border-left: 4px solid var(--cyan);
+      background: color-mix(in srgb, var(--cyan) 9%, var(--bg-card));
+      font-size: 14px;
+      color: var(--text);
+    }
+    .callout.tip {
+      border-left-color: var(--orange);
+      background: color-mix(in srgb, var(--orange) 10%, var(--bg-card));
+    }
+    .callout strong { color: var(--text); }
+
+    /* Inline code & kbd */
+    code {
+      font-family: var(--mono);
+      font-size: 0.9em;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 5px;
+      color: var(--cyan);
+    }
+    kbd {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .ui-pill {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .ui-pill.blue { background: rgba(14, 99, 156, 0.28); border-color: #167ec4; color: #7cc7ff; }
+    .ui-pill.green { background: rgba(33, 110, 69, 0.28); border-color: #2ea043; color: #7ee787; }
+    .ui-pill.cyan { background: rgba(20, 74, 92, 0.32); border-color: #00bcd4; color: #67e8f9; }
+    body.light .ui-pill.blue { background: #dbeafe; border-color: #60a5fa; color: #1d4ed8; }
+    body.light .ui-pill.green { background: #dcfce7; border-color: #4ade80; color: #15803d; }
+    body.light .ui-pill.cyan { background: #cffafe; border-color: #22d3ee; color: #0e7490; }
+
+    /* Mode compare cards */
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .mode-badge.tt {
+      background: rgba(0, 188, 212, 0.16);
+      color: var(--cyan);
+      border: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+    }
+    .mode-badge.live {
+      background: rgba(255, 165, 0, 0.16);
+      color: var(--orange);
+      border: 1px solid color-mix(in srgb, var(--orange) 45%, transparent);
+    }
+
+    /* Shortcuts Table */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-soft);
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { width: 210px; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .mockup-grid, .grid-3, .steps, .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .mpane {
+        border-right: none;
+        border-bottom: 1px solid #2a2f3d;
+      }
+      .mpane:last-child { border-bottom: none; }
+      .hero { padding: 28px 22px; }
+    }
+
+    @media print {
+      .navbar, .theme-btn { display: none; }
+      body { background: #fff; color: #111; }
+      .card, .hero, .step-card, .table-wrap { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body class="light">
+  <!-- 상단 내비게이션 -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        <span>🤖 JS Robot Visualizer</span>
+        <span class="brand-pill">사용 가이드</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#layout">화면 구성</a>
+        <a href="#quickstart">1분 시작</a>
+        <a href="#memory">3D 메모리</a>
+        <a href="#dom">HTML/DOM 실습</a>
+        <a href="#files">저장/탭</a>
+        <a href="#shortcuts">단축키</a>
+        <button id="btn-theme" class="theme-btn" type="button">🌙 어두운 테마</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 히어로 배너 -->
+    <section class="hero">
+      <div class="hero-badge">✨ 설치 없이 브라우저에서 바로 학습</div>
+      <h1>자바스크립트 실행 원리를<br>눈으로 보며 배우는 3D 시각화 도구</h1>
+      <p>
+        <strong>JS Robot Visualizer</strong>는 코드가 한 줄씩 실행될 때마다
+        <strong>변수·배열·객체·함수 스코프(3D 메모리)</strong>와 <strong>웹 화면(Live DOM)</strong>이
+        어떻게 바뀌는지 시간 여행하듯 앞뒤로 되감아 볼 수 있는 자바스크립트 학습 웹 앱입니다.
+      </p>
+      <div class="hero-actions">
+        <a class="cta-btn" href="https://primesko.mycafe24.com/js/" target="_blank" rel="noopener">
+          🚀 지금 바로 접속하기 →
+        </a>
+        <span class="url-chip">https://primesko.mycafe24.com/js/</span>
+      </div>
+    </section>
+
+    <!-- 1. 화면 구성 -->
+    <section id="layout">
+      <div class="sec-head">
+        <span class="sec-num">1</span>
+        <h2>화면 구성 한눈에 보기</h2>
+      </div>
+
+      <!-- 시각적 3단 레이아웃 모형 -->
+      <div class="mockup-shell" aria-label="화면 3단 구조 미리보기">
+        <div class="mockup-topbar">
+          <div class="mockup-dots">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <strong style="margin-left:6px;">🤖 JS Robot Visualizer Pro</strong>
+          </div>
+          <div class="mockup-pills">
+            <span class="mpill">➕ 새 탭</span>
+            <span class="mpill">📂 열기</span>
+            <span class="mpill">💾 저장</span>
+            <span class="mpill">📚 스니펫</span>
+            <span class="mpill cyan">🧊 3D 메모리</span>
+            <span class="mpill cyan">🌐 Live DOM</span>
+          </div>
+        </div>
+        <div class="mockup-grid">
+          <div class="mpane">
+            <div class="mpane-title">① 왼쪽 · 코드 에디터 & 디버거</div>
+            <div class="mcode">
+              const arr = [75, 88];<br>
+              <span class="hl">function addBonus(scores, bonus) {</span>
+              &nbsp;&nbsp;scores.push(100);<br>
+              }
+            </div>
+            <div style="font-size:11px;color:#8fa0bf;">
+              🚀 실행(F5) · ◀ Prev(F9) · Next(F10) ▶ · 콘솔 출력
+            </div>
+          </div>
+
+          <div class="mpane">
+            <div class="mpane-title">② 가운데 · 🧊 3D 메모리 공간</div>
+            <div class="mcanvas">
+              <svg viewBox="0 0 320 140" width="100%" height="128" role="img" aria-label="3D 메모리 스코프 예시">
+                <!-- Left: Script Scope -->
+                <text x="8" y="16" fill="#ffffff" font-size="10.5" font-weight="bold" font-family="Consolas, monospace">📜 Script Scope</text>
+                <line x1="8" y1="21" x2="155" y2="21" stroke="#343a4a" />
+                <!-- origin[] 3D box -->
+                <polygon points="14,42 22,34 86,34 78,42" fill="#3c3c3c" stroke="#00e5ff" stroke-width="1.3"/>
+                <polygon points="78,42 86,34 86,62 78,70" fill="#1a1a1a" stroke="#00e5ff" stroke-width="1.3"/>
+                <rect x="14" y="42" width="64" height="28" fill="#252526" stroke="#00e5ff" stroke-width="1.3"/>
+                <text x="46" y="60" text-anchor="middle" fill="#ffeb3b" font-size="10" font-weight="bold" font-family="Consolas, monospace">origin[]</text>
+
+                <!-- Array items -->
+                <polyline points="46,70 46,79 8,79 8,110 16,110" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="3,2"/>
+                <text x="36" y="92" text-anchor="middle" fill="#39ff14" font-size="10" font-weight="bold" font-family="Consolas, monospace">75</text>
+                <rect x="16" y="98" width="38" height="24" fill="#252526" stroke="#00e5ff" stroke-width="1.2"/>
+                <text x="35" y="114" text-anchor="middle" fill="#8a909e" font-size="9" font-family="Consolas, monospace">0</text>
+
+                <text x="86" y="92" text-anchor="middle" fill="#39ff14" font-size="10" font-weight="bold" font-family="Consolas, monospace">88</text>
+                <rect x="66" y="98" width="38" height="24" fill="#252526" stroke="#00e5ff" stroke-width="1.2"/>
+                <text x="85" y="114" text-anchor="middle" fill="#8a909e" font-size="9" font-family="Consolas, monospace">1</text>
+
+                <!-- Right top: Local Scope -->
+                <text x="180" y="16" fill="#00e5ff" font-size="10.5" font-weight="bold" font-family="Consolas, monospace">📦 Local Scope</text>
+                <line x1="180" y1="21" x2="310" y2="21" stroke="#343a4a" />
+                <!-- scores[] hovered yellow -->
+                <polygon points="184,42 192,34 256,34 248,42" fill="#3c3c3c" stroke="#ffff00" stroke-width="1.8"/>
+                <polygon points="248,42 256,34 256,62 248,70" fill="#1a1a1a" stroke="#ffff00" stroke-width="1.8"/>
+                <rect x="184" y="42" width="64" height="28" fill="#252526" stroke="#ffff00" stroke-width="1.8"/>
+                <text x="216" y="60" text-anchor="middle" fill="#ffff00" font-size="10" font-weight="bold" font-family="Consolas, monospace">scores[]</text>
+                <!-- Orange shared ref arrow -->
+                <polyline points="216,70 216,110 106,110" fill="none" stroke="#ffa500" stroke-width="1.6" stroke-dasharray="3,2"/>
+                <polygon points="104,110 111,106 111,114" fill="#ffa500"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mpane">
+            <div class="mpane-title">③ 오른쪽 · 🌐 Live DOM</div>
+            <div class="mdom">
+              <strong style="font-size:13px;">구구단 출력기</strong>
+              <div style="display:flex;gap:5px;align-items:center;">
+                <span style="border:1px solid #cbd5e1;border-radius:4px;padding:3px 8px;color:#64748b;font-size:11px;">3</span>
+                <span class="mdom-btn">출력</span>
+              </div>
+              <div style="font-size:11px;color:#334155;line-height:1.5;">
+                3 × 1 = 3<br>3 × 2 = 6<br>3 × 3 = 9 ...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>📝 1. 코드 에디터 & 콘솔</h3>
+          <p><code>JavaScript</code>, <code>HTML 템플릿</code>, <code>CSS 스타일</code> 탭에 코드를 입력하고, 하단 제어 버튼과 타임라인으로 한 줄씩 실행합니다.</p>
+        </div>
+        <div class="card">
+          <h3>🧊 2. 3D 메모리 공간</h3>
+          <p>변수가 생성되면 3D 상자로 표시됩니다. 왼쪽엔 <strong>Global · Script · Closure</strong>, 오른쪽 상단엔 <strong>Local Scope</strong>가 자동 배치됩니다.</p>
+        </div>
+        <div class="card">
+          <h3>🌐 3. Live DOM 미리보기</h3>
+          <p>HTML/CSS/JS로 만든 웹페이지가 실시간으로 그려지며, 버튼 클릭 시 연결된 JS 코드를 한 줄씩 추적할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        💡 <strong>화면 크기 조절 팁:</strong> 세 영역 사이의 세로 경계선을 좌우로 드래그하면 패널 너비를 자유롭게 조절할 수 있고, 상단의 <span class="ui-pill cyan">🧊 3D 메모리</span> / <span class="ui-pill cyan">🌐 Live DOM</span> 버튼으로 필요한 화면만 골라 크게 볼 수 있습니다.
+      </div>
+    </section>
+
+    <!-- 2. 1분 시작 -->
+    <section id="quickstart">
+      <div class="sec-head">
+        <span class="sec-num">2</span>
+        <h2>1분 만에 따라 해보기</h2>
+      </div>
+      <div class="steps">
+        <div class="step-card">
+          <span class="step-tag">STEP 1</span>
+          <h3>예제 열기 또는 코드 작성</h3>
+          <p>처음 접속하면 기본 예제 탭이 열려 있습니다. 상단 <span class="ui-pill green">📚 스니펫</span>을 누르면 참조/복사, 이벤트 루프, 계산기, 업다운 게임 등 다양한 예제를 바로 열 수 있습니다.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-tag">STEP 2</span>
+          <h3>실행 버튼 누르기</h3>
+          <p><span class="ui-pill blue">🚀 실행 (F5)</span>을 누르면 코드가 한 줄씩 자동 재생됩니다. 재생 속도는 <code>0.3x</code>(천천히)부터 <code>⚡ 최고속</code>까지 자유롭게 바꿀 수 있습니다.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-tag">STEP 3</span>
+          <h3>앞뒤로 시간 여행 디버깅</h3>
+          <p><kbd>F10</kbd>(다음 줄), <kbd>F9</kbd>(이전 줄), <kbd>F8</kbd>(함수 건너뛰기)나 <strong>타임라인 슬라이더</strong>를 움직여 원하는 실행 시점으로 마음대로 이동해 보세요.</p>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        🔴 <strong>중단점(Breakpoint) 기능:</strong> 에디터 왼쪽 <strong>줄 번호를 클릭</strong>하면 빨간 점(🔴)이 찍힙니다. 그다음 <span class="ui-pill">⏩ BP까지</span> 버튼을 누르면 빨간 점이 찍힌 줄까지 한 번에 실행하고 멈춥니다.
+      </div>
+    </section>
+
+    <!-- 3. 3D 메모리 공간 -->
+    <section id="memory">
+      <div class="sec-head">
+        <span class="sec-num">3</span>
+        <h2>🧊 3D 메모리 공간 활용법</h2>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>✨ 코드 ↔ 상자 호버 연동</h3>
+          <ul>
+            <li>에디터의 <strong>변수 이름 위에 마우스를 올리면</strong>, 3D 메모리 공간에서 <strong>해당 변수 상자와 연결된 배열·객체 데이터만 노란색</strong>으로 반짝입니다.</li>
+            <li>마우스 커서 옆에 현재 변수 값이 말풍선으로 바로 표시됩니다.</li>
+            <li>배열(<code>[]</code>)이나 객체(<code>{}</code>)를 다른 변수에 대입하면 <strong>주황색 점선 화살표</strong>로 같은 메모리를 가리키는 모습을 한눈에 확인할 수 있습니다.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🖐️ 상자 자유롭게 이동 & 정리</h3>
+          <ul>
+            <li><strong>상자 1개 이동:</strong> 상자를 마우스 왼쪽 버튼으로 드래그</li>
+            <li><strong>여러 상자 한 번에 이동:</strong> 빈 공간을 마우스로 드래그해 파란 네모로 묶은 뒤, 선택된 상자를 드래그 (<kbd>Ctrl</kbd>+클릭으로 개별 선택 추가/해제)</li>
+            <li><strong>스코프 통째 이동:</strong> <code>Global Scope</code>, <code>Local Scope</code> 같은 상단 제목 영역을 마우스 왼쪽 버튼으로 드래그</li>
+            <li><strong>확대/축소 & 원위치:</strong> <kbd>Ctrl</kbd> + 마우스 휠로 확대/축소, <span class="ui-pill cyan">🧲 정렬 초기화</span>로 원래 배치로 복구</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HTML/CSS/JS & Live DOM -->
+    <section id="dom">
+      <div class="sec-head">
+        <span class="sec-num">4</span>
+        <h2>🌐 HTML + CSS + JS 웹페이지 실습하기</h2>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <h3>📄 코드 입력 방법 (2가지 모두 지원!)</h3>
+        <ul>
+          <li><strong>방법 A — 탭 나눠 쓰기:</strong> <span class="ui-pill">🧱 HTML 템플릿</span>에 HTML, <span class="ui-pill">🎨 CSS 스타일</span>에 CSS, <span class="ui-pill">📜 JavaScript</span>에 JS를 각각 입력하고 <span class="ui-pill blue">🚀 실행 (F5)</span>을 누릅니다.</li>
+          <li><strong>방법 B — 전체 HTML 한 번에 붙여넣기:</strong> <code>&lt;!DOCTYPE html&gt;</code>부터 <code>&lt;style&gt;</code>, <code>&lt;script&gt;</code>까지 들어 있는 전체 HTML 코드를 <strong><span class="ui-pill">🧱 HTML 템플릿</span> 탭에 통째로 붙여넣고</strong> <span class="ui-pill blue">🚀 실행 (F5)</span>을 누르면, 앱이 스타일과 스크립트를 자동으로 분리해서 실행합니다. <em>(단, JavaScript 탭이 비어 있을 때 자동 분리됩니다.)</em></li>
+        </ul>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="mode-badge tt">🎞️ 타임트래블 (클릭디버깅) · 기본 모드</div>
+          <h3>버튼 클릭 과정을 한 줄씩 추적</h3>
+          <p>
+            먼저 <span class="ui-pill blue">🚀 실행 (F5)</span>을 한 번 누른 뒤, 우측 Live DOM 화면의 버튼을 클릭하면
+            연결된 이벤트 함수의 첫 줄에서 자동으로 멈춥니다.
+            <kbd>F10</kbd>(Next) / <kbd>F9</kbd>(Prev)를 눌러 변수와 화면이 어떻게 바뀌는지 한 단계씩 관찰할 수 있습니다.
+          </p>
+        </div>
+        <div class="card">
+          <div class="mode-badge live">⚡ 인터랙티브 모드</div>
+          <h3>일반 브라우저처럼 즉시 실행</h3>
+          <p>
+            우측 Live DOM 패널 상단의 <span class="ui-pill">⚡ 인터랙티브</span> 버튼을 누르면
+            한 줄 디버깅 없이 일반 웹페이지처럼 클릭·입력 결과가 즉시 화면에 반영됩니다.
+            우측 상단 <span class="ui-pill cyan">⛶ 크게</span> 또는 <span class="ui-pill blue">🗗 새 창</span>으로 화면을 넓혀 볼 수도 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 탭 & 저장 -->
+    <section id="files">
+      <div class="sec-head">
+        <span class="sec-num">5</span>
+        <h2>멀티탭 관리 & 내 코드 저장하기</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>🗂️ 여러 연습장 동시에 쓰기</h3>
+          <p>상단 <span class="ui-pill blue">➕ 새 탭</span>으로 새 연습장을 만들 수 있고, 탭 제목을 <strong>더블클릭</strong>하면 원하는 이름으로 바꿀 수 있습니다.</p>
+        </div>
+        <div class="card">
+          <h3>💾 브라우저 자동 저장</h3>
+          <p>작성 중인 탭과 내가 추가한 개인 스니펫은 내 브라우저에 자동 저장됩니다. 같은 브라우저로 다시 접속하면 이전 작업을 그대로 이어서 볼 수 있습니다.</p>
+        </div>
+        <div class="card">
+          <h3>📥 내 PC로 파일 저장 / 열기</h3>
+          <p><span class="ui-pill">💾 저장</span>을 누르면 <code>.js</code> 또는 <code>.jsv.json</code>(HTML/CSS 포함) 파일로 다운로드되고, <span class="ui-pill">📂 열기</span>로 PC의 파일을 바로 불러올 수 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 단축키 -->
+    <section id="shortcuts">
+      <div class="sec-head">
+        <span class="sec-num">6</span>
+        <h2>자주 쓰는 단축키 치트시트</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>단축키</th>
+              <th>동작 설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><kbd>F5</kbd></td><td>코드 실행 / 자동 재생 일시정지 / 이어재생</td></tr>
+            <tr><td><kbd>Shift</kbd> + <kbd>F5</kbd></td><td>실행 중지</td></tr>
+            <tr><td><kbd>F10</kbd></td><td>다음 줄로 한 단계 실행 (<code>Next</code>)</td></tr>
+            <tr><td><kbd>F9</kbd></td><td>이전 줄로 되돌아가기 (<code>Prev</code>)</td></tr>
+            <tr><td><kbd>F8</kbd></td><td>함수 내부로 들어가지 않고 건너뛰기 (<code>Over</code>)</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>S</kbd></td><td>현재 탭 코드 파일로 다운로드</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>O</kbd></td><td>내 PC의 코드 파일 불러오기</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + 마우스 휠</td><td>3D 메모리 캔버스 확대 / 축소</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        🤖 <strong>JavaScript Robot Visualizer Pro</strong> 사용 가이드 ·
+        <a href="https://primesko.mycafe24.com/js/" target="_blank" rel="noopener">https://primesko.mycafe24.com/js/</a>
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const btn = document.getElementById("btn-theme");
+      const KEY = "jsv_guide_theme";
+      function applyTheme(mode) {
+        const isLight = mode === "light";
+        document.body.classList.toggle("light", isLight);
+        btn.textContent = isLight ? "🌙 어두운 테마" : "☀️ 밝은 테마";
+      }
+      try {
+        applyTheme(localStorage.getItem(KEY) || "light");
+      } catch {
+        applyTheme("light");
+      }
+      btn.addEventListener("click", () => {
+        const next = document.body.classList.contains("light") ? "dark" : "light";
+        applyTheme(next);
+        try { localStorage.setItem(KEY, next); } catch {}
+      });
+    })();
+  </script>
+</body>
+</html>
