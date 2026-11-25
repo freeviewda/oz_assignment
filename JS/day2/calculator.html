@@ -1,13 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>콘솔창 계산기(사칙연산만 가능)</title>
+    <style>
+        .bold {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
+    <h1>콘솔창 계산기(사칙연산만 가능)</h1>
+
+    <div id="div1">
+        <h2>Windows OS</h2>
+        <hr>
+        <ol>
+            <li class="bold">F12 키를 눌러 콘솔 창 열기</li>
+            <li>콘솔창에 "start()" 를 입력하여 계산기 실행</li>
+        </ol>
+    </div>
+
+    <div id="div2">
+        <h2>Mac OS</h2>
+        <hr>
+        <ol>
+            <li class="bold">Option + Command + i 키를 눌러 콘솔 창 열기</li>
+            <li>콘솔창에 "start()" 를 입력하여 계산기 실행</li>
+        </ol>
+    </div>
+
     <script>
         function calculate(expression) {
             const tokens = String(expression ?? '').match(/(\d+(\.\d+)?|[+\-*/])/g);
